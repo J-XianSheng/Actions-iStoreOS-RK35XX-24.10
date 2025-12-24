@@ -90,17 +90,23 @@
 	};
 
 	thermal-zones {
+		// 禁用原生温控节点
+		package-thermal {
+			status = "disabled";
+		};
+
 		// CPU 核心主温控区（优先级最高，关联风扇调速）
 		cpu_thermal: cpu-thermal {
-			polling-delay-passive = <250>; // 被动散热轮询间隔 250ms
-			polling-delay = <1000>; // 主动散热轮询间隔 1s
+			priority = <100>;
+			polling-delay-passive = <100>; // 被动散热轮询间隔 100ms
+			polling-delay = <500>; // 主动散热轮询间隔 500ms
 			thermal-sensors = <&tsadc 0>; // 绑定 CPU 温度传感器
 			status = "okay";
 
 			trips {
-				// 风扇停转阈值：低于 40℃ 保持停转
+				// 风扇停转阈值：低于 37℃ 保持停转
 				cpu_temp_off: temp-off {
-					temperature = <40000>; // 单位 m℃（40℃）
+					temperature = <37000>; // 单位 m℃（37℃）
 					hysteresis = <3000>; // 回差 3℃，避免频繁启停
 					type = "passive";
 				};
