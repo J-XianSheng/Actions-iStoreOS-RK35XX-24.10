@@ -99,7 +99,7 @@
 		cpu_thermal: cpu-thermal {
 			priority = <100>;
 			polling-delay-passive = <100>; // 被动散热轮询间隔 100ms
-			polling-delay = <500>; // 主动散热轮询间隔 500ms
+			polling-delay = <0>;
 			thermal-sensors = <&tsadc 0>; // 绑定 CPU 温度传感器
 			status = "okay";
 
@@ -189,8 +189,9 @@
 
 		// GPU 辅助温控区（可选，增强散热协同）
 		gpu_thermal: gpu-thermal {
-			polling-delay-passive = <250>;
-			polling-delay = <1000>;
+			priority = <90>;
+			polling-delay-passive = <150>;
+			polling-delay = <0>;
 			thermal-sensors = <&tsadc 5>; // 绑定 GPU 温度传感器
 			status = "okay";
 
