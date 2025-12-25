@@ -99,6 +99,7 @@
 
 		// CPU 核心主温控区（优先级最高，关联风扇调速）
 		cpu_thermal: cpu-thermal {
+			priority = <100>;
 			polling-delay-passive = <100>; // 被动散热轮询间隔 100ms
 			polling-delay = <0>;
 			thermal-sensors = <&tsadc 0>; // 绑定 CPU 温度传感器
