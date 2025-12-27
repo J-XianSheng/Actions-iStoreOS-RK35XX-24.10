@@ -93,7 +93,7 @@
 
 	fan: pwm-fan {
 		compatible = "pwm-fan";
-		cooling-levels = <0 85 102 119 136 153 187 204 255>;
+		cooling-levels = <0 72 117 162 229 255>;
 		fan-supply = <&vcc5v0_sys>;
 		pwms = <&pwm3 0 50000 0>;
 		#cooling-cells = <2>;
@@ -497,50 +497,61 @@
 	status = "okay";
 
 	trips {
-		cpu_temp_level1: cpu-temp-level1 {
-			temperature = <47000>;
+		cpu_trip_active_cool: cpu-trip-active-cool {
+			temperature = <45000>;
 			hysteresis = <3000>;
 			type = "passive";
 		};
 
-		cpu_temp_level2: cpu-temp-level2 {
+		cpu_trip_active_low: cpu-trip-active-low {
+			temperature = <55000>;
+			hysteresis = <3000>;
+			type = "active";
+		};
+
+		cpu_trip_active_med: cpu-trip-active-med {
 			temperature = <65000>;
 			hysteresis = <3000>;
 			type = "active";
 		};
 
-		cpu_temp_level3: cpu-temp-level3 {
-			temperature = <85000>;
+		cpu_trip_active_high: cpu-trip-active-high {
+			temperature = <80000>;
 			hysteresis = <3000>;
 			type = "active";
 		};
 
-		cpu_temp_level4: cpu-temp-level4 {
+		cpu_trip_active_hot: cpu-trip-active-hot {
 			temperature = <90000>;
 			hysteresis = <3000>;
-			type = "active";
+			type = "hot";
 		};
 	};
 
 	cooling-maps {
-		map1 {
-			trip = <&cpu_temp_level1>;
+		cpu-active-cool {
+			cooling-device = <&fan THERMAL_NO_LIMIT 1>;
+			trip = <&cpu_trip_active_cool>;
+		};
+
+		cpu-active-low {
 			cooling-device = <&fan 1 2>;
+			trip = <&cpu_trip_active_low>;
 		};
 
-		map2 {
-			trip = <&cpu_temp_level2>;
-			cooling-device = <&fan 2 4>;
+		cpu-active-med {
+			cooling-device = <&fan 2 3>;
+			trip = <&cpu_trip_active_med>;
 		};
 
-		map3 {
-			trip = <&cpu_temp_level3>;
-			cooling-device = <&fan 4 6>;
+		cpu-active-high {
+			cooling-device = <&fan 3 4>;
+			trip = <&cpu_trip_active_high>;
 		};
 
-		map4 {
-			trip = <&cpu_temp_level4>;
-			cooling-device = <&fan 6 THERMAL_NO_LIMIT>;
+		cpu-active-hot {
+			cooling-device = <&fan 4 THERMAL_NO_LIMIT>;
+			trip = <&cpu_trip_active_hot>;
 		};
 	};
 };
