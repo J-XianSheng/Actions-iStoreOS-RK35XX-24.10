@@ -491,8 +491,8 @@
 
 &package_thermal {
 	priority = <100>;
-	polling-delay-passive = <150>; // 被动散热轮询间隔 150ms
-	polling-delay-active = <100>; // 主动散热轮询间隔 100ms
+	polling-delay-active = <1000>;
+	polling-delay-passive = <2000>;
 	thermal-sensors = <&tsadc 0>;
 	status = "okay";
 
