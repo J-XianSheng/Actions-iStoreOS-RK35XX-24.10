@@ -93,7 +93,7 @@
 
 	fan: pwm-fan {
 		compatible = "pwm-fan";
-		cooling-levels = <0 72 117 162 229 255>;
+		cooling-levels = <0 179 191 204 255>;
 		fan-supply = <&vcc5v0_sys>;
 		pwms = <&pwm3 0 50000 0>;
 		#cooling-cells = <2>;
@@ -491,67 +491,34 @@
 
 &package_thermal {
 	priority = <100>;
-	polling-delay-passive = <2000>;
+	polling-delay-passive = <1000>;
 	polling-delay-active = <1000>;
 	thermal-sensors = <&tsadc 0>;
 	status = "okay";
 
-	trips {
-		cpu_trip_active_cool: cpu-trip-active-cool {
-			temperature = <48000>;
-			hysteresis = <3000>;
-			type = "passive";
+	cooling-maps {
+		map0 {
+			trip = <&package_fan0>;
+			cooling-device = <&fan THERMAL_NO_LIMIT 1>;
 		};
 
-		cpu_trip_active_low: cpu-trip-active-low {
-			temperature = <55000>;
-			hysteresis = <3000>;
-			type = "active";
-		};
-
-		cpu_trip_active_med: cpu-trip-active-med {
-			temperature = <65000>;
-			hysteresis = <3000>;
-			type = "active";
-		};
-
-		cpu_trip_active_high: cpu-trip-active-high {
-			temperature = <80000>;
-			hysteresis = <3000>;
-			type = "active";
-		};
-
-		cpu_trip_active_hot: cpu-trip-active-hot {
-			temperature = <90000>;
-			hysteresis = <3000>;
-			type = "hot";
+		map1 {
+			trip = <&package_fan1>;
+			cooling-device = <&fan 2 THERMAL_NO_LIMIT>;
 		};
 	};
 
-	cooling-maps {
-		cpu-active-cool {
-			cooling-device = <&fan THERMAL_NO_LIMIT 1>;
-			trip = <&cpu_trip_active_cool>;
+	trips {
+		package_fan0: package-fan0 {
+			temperature = <55000>;
+			hysteresis = <2000>;
+			type = "active";
 		};
 
-		cpu-active-low {
-			cooling-device = <&fan 1 2>;
-			trip = <&cpu_trip_active_low>;
-		};
-
-		cpu-active-med {
-			cooling-device = <&fan 2 3>;
-			trip = <&cpu_trip_active_med>;
-		};
-
-		cpu-active-high {
-			cooling-device = <&fan 3 4>;
-			trip = <&cpu_trip_active_high>;
-		};
-
-		cpu-active-hot {
-			cooling-device = <&fan 4 THERMAL_NO_LIMIT>;
-			trip = <&cpu_trip_active_hot>;
+		package_fan1: package-fan1 {
+			temperature = <65000>;
+			hysteresis = <2000>;
+			type = "active";
 		};
 	};
 };
