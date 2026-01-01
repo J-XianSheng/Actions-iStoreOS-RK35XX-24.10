@@ -491,40 +491,34 @@
 
 &package_thermal {
 	priority = <100>;
-	polling-delay-passive = <1500>;
-	polling-delay-active = <1000>;
+	polling-delay-passive = <1000>;
+	polling-delay-active = <500>;
 	thermal-sensors = <&tsadc 0>;
 	status = "okay";
 
 	trips {
 		cpu_trip_active_cool: cpu-trip-active-cool {
 			temperature = <48000>;
-			hysteresis = <2000>;
+			hysteresis = <3000>;
 			type = "passive";
 		};
 
 		cpu_trip_active_low: cpu-trip-active-low {
 			temperature = <55000>;
-			hysteresis = <2000>;
-			type = "active";
-		};
-
-		cpu_trip_active_med: cpu-trip-active-med {
-			temperature = <65000>;
-			hysteresis = <2000>;
+			hysteresis = <3000>;
 			type = "active";
 		};
 
 		cpu_trip_active_high: cpu-trip-active-high {
-			temperature = <80000>;
-			hysteresis = <2000>;
+			temperature = <65000>;
+			hysteresis = <5000>;
 			type = "active";
 		};
 	};
 
 	cooling-maps {
 		cpu-active-cool {
-			cooling-device = <&fan THERMAL_NO_LIMIT 1>;
+			cooling-device = <&fan 0 1>;
 			trip = <&cpu_trip_active_cool>;
 		};
 
@@ -533,13 +527,8 @@
 			trip = <&cpu_trip_active_low>;
 		};
 
-		cpu-active-med {
-			cooling-device = <&fan 2 3>;
-			trip = <&cpu_trip_active_med>;
-		};
-
 		cpu-active-high {
-			cooling-device = <&fan 3 THERMAL_NO_LIMIT>;
+			cooling-device = <&fan 2 3>;
 			trip = <&cpu_trip_active_high>;
 		};
 	};
