@@ -320,10 +320,6 @@
 	status = "okay";
 };
 
-&hdptxphy_hdmi0 {
-	status = "okay";
-};
-
 &hdptxphy0 {
 	status = "okay";
 };
