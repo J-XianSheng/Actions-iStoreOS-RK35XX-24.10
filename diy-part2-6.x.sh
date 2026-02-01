@@ -30,7 +30,7 @@ chmod 755 package/base-files/files/bin/coremark.sh
 
 
 # 为IEP节点增加256MB的预留内存
-grep -rl "rootwait\"" target/linux/rockchip/image/legacy/ | xargs sed -i 's/rw rootwait"/rw rootwait mpp_reserve=256M"/g'
+grep -rl "rw rootwait\"" target/linux/rockchip/image/legacy/ | xargs sed -i 's/rw rootwait"/rw rootwait mpp_reserve=256M"/g'
 
 
 # 复制dts设备树文件到指定目录下
