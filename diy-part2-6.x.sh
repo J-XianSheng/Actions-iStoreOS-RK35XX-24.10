@@ -17,7 +17,7 @@ cp -a $GITHUB_WORKSPACE/configfiles/etc/* package/base-files/files/etc/
 # ls package/base-files/files/etc/
 
 
-# 追加binder内核参数
+# 追加自定义内核配置项
 echo "CONFIG_PSI=y
 CONFIG_KPROBES=y" >> target/linux/rockchip/armv8/config-6.6
 
@@ -27,6 +27,10 @@ cp -f $GITHUB_WORKSPACE/configfiles/coremark/coremark-arm64 package/base-files/f
 cp -f $GITHUB_WORKSPACE/configfiles/coremark/coremark-arm64.sh package/base-files/files/bin/coremark.sh
 chmod 755 package/base-files/files/bin/coremark-arm64
 chmod 755 package/base-files/files/bin/coremark.sh
+
+
+# 为IEP节点增加256MB的预留内存
+grep -rl "rootwait\"" target/linux/rockchip/image/legacy/ | xargs sed -i 's/rw rootwait"/rw rootwait mpp_reserve=256M"/g'
 
 
 # 复制dts设备树文件到指定目录下
